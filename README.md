@@ -3,7 +3,7 @@
 This fork has some unique features:
 
 ## Features:
-It's empty right now!
+* Rich text wrapping
 
 # License
 
