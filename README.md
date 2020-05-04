@@ -1,14 +1,9 @@
 # RocketMod
 
-This is the officially maintained version of **RocketMod** for Unturned. [Read the installation instructions here.](https://github.com/SmartlyDressedGames/U3-Docs/blob/master/RocketMod.md) 
+This fork has some unique features:
 
-On the 20th of December 2019 Sven Mawby "fr34kyn01535" and Enes Sadık Özbek "Trojaner" officially ceased maintenance of RocketMod. They have kindly released the source code under the MIT license. [Read their full farewell statement here.](https://github.com/RocketMod/Rocket/blob/master/Farewell.md)
-
-# Contributing
-
-The goals of this repository are to maintain compatibility with Unturned, maintain backwards compatibility with plugins, and fix bugs. Changes outside that scope will be made to the Unturned API rather than reworking the Rocket API. New plugins should ideally be using the game API where possible.
-
-Issues are monitored and will be discussed, but pull requests will not be directly merged.
+## Features:
+It's empty right now!
 
 # License
 
