@@ -1,13 +1,6 @@
-using Rocket.Core;
-using Rocket.Core.Logging;
-using Rocket.Core.Utils;
 using Rocket.Unturned.Player;
-using SDG.Provider;
-using SDG.Provider.Services.Achievements;
 using SDG.Unturned;
-using Steamworks;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Rocket.Unturned
@@ -16,7 +9,7 @@ namespace Rocket.Unturned
     {
         public bool VanishMode = false;
         DateTime lastUpdate = DateTime.Now;
-        Vector3 lastVector = new Vector3(0,-1,0);
+        Vector3 lastVector = new Vector3(0, -1, 0);
 
         private void FixedUpdate()
         {

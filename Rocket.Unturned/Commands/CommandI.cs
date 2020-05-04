@@ -1,11 +1,10 @@
-﻿using Rocket.Core.Logging;
+﻿using Rocket.API;
+using Rocket.Core.Logging;
+using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using System;
 using System.Collections.Generic;
-using Rocket.API;
-using Rocket.Unturned.Chat;
-using Rocket.Unturned.Items;
 using System.Linq;
 
 namespace Rocket.Unturned.Commands
@@ -27,7 +26,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Gives yourself an item";}
+            get { return "Gives yourself an item"; }
         }
 
         public string Syntax
@@ -42,7 +41,7 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.item" , "rocket.i" }; }
+            get { return new List<string>() { "rocket.item", "rocket.i" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
@@ -71,7 +70,7 @@ namespace Rocket.Unturned.Commands
                 }
             }
 
-            Asset a = SDG.Unturned.Assets.find(EAssetType.ITEM,id);
+            Asset a = SDG.Unturned.Assets.find(EAssetType.ITEM, id);
 
             if (command.Length == 2 && !byte.TryParse(command[1].ToString(), out amount) || a == null)
             {
@@ -83,7 +82,8 @@ namespace Rocket.Unturned.Commands
 
             if (U.Settings.Instance.EnableItemBlacklist && !player.HasPermission("itemblacklist.bypass"))
             {
-                if (player.HasPermission("item." + id)) {
+                if (player.HasPermission("item." + id))
+                {
                     UnturnedChat.Say(player, U.Translate("command_i_blacklisted"));
                     return;
                 }

@@ -1,13 +1,12 @@
-﻿using SDG.Unturned;
+﻿using Rocket.API;
+using Rocket.Core;
+using Rocket.Core.Plugins;
+using Rocket.Unturned.Chat;
+using SDG.Unturned;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
-using Rocket.API;
-using Rocket.Core.Plugins;
-using Rocket.Core;
-using Rocket.Unturned.Chat;
-using Rocket.Core.Logging;
+using System.Reflection;
 
 namespace Rocket.Unturned.Commands
 {
@@ -57,7 +56,8 @@ namespace Rocket.Unturned.Commands
 
             if (command.Length == 1)
             {
-                switch (command[0].ToLower()) {
+                switch (command[0].ToLower())
+                {
                     case "plugins":
                         if (caller != null && !caller.HasPermission("rocket.plugins")) return;
                         List<IRocketPlugin> plugins = R.Plugins.GetPlugins();
@@ -67,9 +67,9 @@ namespace Rocket.Unturned.Commands
                         UnturnedChat.Say(caller, U.Translate("command_rocket_plugins_cancelled", String.Join(", ", plugins.Where(p => p.State == PluginState.Cancelled).Select(p => p.GetType().Assembly.GetName().Name).ToArray())));
                         break;
                     case "reload":
-                        if (caller!=null && !caller.HasPermission("rocket.reload")) return;
-                            UnturnedChat.Say(caller, U.Translate("command_rocket_reload"));
-                            R.Reload();
+                        if (caller != null && !caller.HasPermission("rocket.reload")) return;
+                        UnturnedChat.Say(caller, U.Translate("command_rocket_reload"));
+                        R.Reload();
                         break;
                 }
             }

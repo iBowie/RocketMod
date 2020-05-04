@@ -1,12 +1,11 @@
-﻿using SDG.Unturned;
-using UnityEngine;
-using System.Linq;
-using Rocket.Core.Logging;
-using Rocket.Unturned.Player;
-using System.Collections.Generic;
-using Rocket.API;
-using Rocket.Unturned.Chat;
+﻿using Rocket.API;
 using Rocket.API.Extensions;
+using Rocket.Unturned.Chat;
+using Rocket.Unturned.Player;
+using SDG.Unturned;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Rocket.Unturned.Commands
 {
@@ -27,7 +26,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Teleports you to another player or location";}
+            get { return "Teleports you to another player or location"; }
         }
 
         public string Syntax

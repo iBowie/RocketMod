@@ -23,7 +23,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Give a player admin privileges";}
+            get { return "Give a player admin privileges"; }
         }
 
         public string Syntax
@@ -52,15 +52,15 @@ namespace Rocket.Unturned.Commands
                 if (player == null)
                 {
                     UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
-                    throw new WrongUsageOfCommandException(caller,this);
+                    throw new WrongUsageOfCommandException(caller, this);
                 }
 
                 if (!player.IsAdmin)
                 {
-                    UnturnedChat.Say(caller, "Successfully admined "+player.CharacterName);
+                    UnturnedChat.Say(caller, "Successfully admined " + player.CharacterName);
                     player.Admin(true);
                 }
-            }   
+            }
         }
     }
 }

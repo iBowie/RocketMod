@@ -1,15 +1,15 @@
-﻿using SDG.Unturned;
+﻿using Rocket.API;
+using Rocket.API.Serialisation;
+using Rocket.Core;
+using Rocket.Core.Steam;
+using Rocket.Unturned.Chat;
+using Rocket.Unturned.Events;
+using Rocket.Unturned.Skills;
+using SDG.Unturned;
 using Steamworks;
 using System;
-using UnityEngine;
 using System.Linq;
-using Rocket.Unturned.Events;
-using Rocket.API;
-using Rocket.Core;
-using Rocket.Unturned.Chat;
-using Rocket.Unturned.Skills;
-using Rocket.Core.Steam;
-using Rocket.API.Serialisation;
+using UnityEngine;
 
 namespace Rocket.Unturned.Player
 {
@@ -78,7 +78,7 @@ namespace Rocket.Unturned.Player
                     return Palette.ADMIN;
                 }
 
-                RocketPermissionsGroup group = R.Permissions.GetGroups(this,false).Where(g => g.Color != null && g.Color != "white").FirstOrDefault();
+                RocketPermissionsGroup group = R.Permissions.GetGroups(this, false).Where(g => g.Color != null && g.Color != "white").FirstOrDefault();
                 string color = "";
                 if (group != null) color = group.Color;
                 return UnturnedChat.GetColorFromName(color, Palette.COLOR_W);
@@ -112,7 +112,7 @@ namespace Rocket.Unturned.Player
 
         public bool Equals(UnturnedPlayer otherPlayer)
         {
-            if(ReferenceEquals(otherPlayer, null))
+            if (ReferenceEquals(otherPlayer, null))
             {
                 return false;
             }
@@ -200,7 +200,7 @@ namespace Rocket.Unturned.Player
         {
             EffectManager.instance.channel.send("tellEffectPoint", CSteamID, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { effectID, player.transform.position });
         }
-        
+
         public string IP
         {
             get
@@ -214,12 +214,12 @@ namespace Rocket.Unturned.Player
         public void MaxSkills()
         {
             PlayerSkills skills = player.skills;
-            
+
             foreach (var skill in skills.skills.SelectMany(s => s))
             {
                 skill.level = skill.max;
             }
-            
+
             skills.askSkills(player.channel.owner.playerID.steamID);
         }
 
@@ -293,7 +293,7 @@ namespace Rocket.Unturned.Player
 
             uint ipToBan = 0;
             P2PSessionState_t state;
-            if(SteamGameServerNetworking.GetP2PSessionState(steamIdToBan, out state))
+            if (SteamGameServerNetworking.GetP2PSessionState(steamIdToBan, out state))
             {
                 ipToBan = state.m_nRemoteIP;
             }
@@ -342,7 +342,7 @@ namespace Rocket.Unturned.Player
             }
             else
             {
-				player.teleportToLocation(position, rotation);
+                player.teleportToLocation(position, rotation);
             }
         }
 
@@ -514,7 +514,7 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.tellBroken(Provider.server,value);
+                player.life.tellBroken(Provider.server, value);
                 player.life.channel.send("tellBroken", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[] { value });
             }
         }

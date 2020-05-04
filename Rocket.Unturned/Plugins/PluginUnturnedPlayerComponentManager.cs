@@ -1,10 +1,6 @@
 ﻿using Rocket.API;
-using Rocket.API.Extensions;
-using Rocket.Core.Logging;
 using Rocket.Core.Utils;
-using Rocket.Unturned.Events;
 using Rocket.Unturned.Player;
-using SDG.Unturned;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +13,7 @@ namespace Rocket.Unturned.Plugins
     {
         private Assembly assembly;
         private List<Type> unturnedPlayerComponents = new List<Type>();
-        
+
         private void OnDisable()
         {
             try
@@ -39,7 +35,7 @@ namespace Rocket.Unturned.Plugins
         private void OnEnable()
         {
             try
-            {  
+            {
                 IRocketPlugin plugin = GetComponent<IRocketPlugin>();
                 assembly = plugin.GetType().Assembly;
 
@@ -48,7 +44,7 @@ namespace Rocket.Unturned.Plugins
 
                 foreach (Type playerComponent in unturnedPlayerComponents)
                 {
-                    Core.Logging.Logger.Log("Adding UnturnedPlayerComponent: "+playerComponent.Name);
+                    Core.Logging.Logger.Log("Adding UnturnedPlayerComponent: " + playerComponent.Name);
                     //Provider.Players.ForEach(p => p.Player.gameObject.TryAddComponent(playerComponent.GetType()));
                 }
             }

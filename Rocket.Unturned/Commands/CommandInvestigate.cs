@@ -1,8 +1,7 @@
-﻿using SDG.Unturned;
-using System;
-using Rocket.API;
-using System.Collections.Generic;
+﻿using Rocket.API;
 using Rocket.Unturned.Chat;
+using SDG.Unturned;
+using System.Collections.Generic;
 
 namespace Rocket.Unturned.Commands
 {
@@ -23,7 +22,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Shows you the SteamID64 of a player";}
+            get { return "Shows you the SteamID64 of a player"; }
         }
 
         public string Syntax
@@ -43,7 +42,7 @@ namespace Rocket.Unturned.Commands
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            if (command.Length!=1)
+            if (command.Length != 1)
             {
                 UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
                 throw new WrongUsageOfCommandException(caller, this);

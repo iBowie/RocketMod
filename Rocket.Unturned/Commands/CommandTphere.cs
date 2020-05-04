@@ -23,7 +23,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Teleports another player to you";}
+            get { return "Teleports another player to you"; }
         }
 
         public string Syntax
@@ -51,13 +51,13 @@ namespace Rocket.Unturned.Commands
                 throw new WrongUsageOfCommandException(caller, this);
             }
             UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[0]);
-            if (otherPlayer!=null && otherPlayer != caller)
+            if (otherPlayer != null && otherPlayer != caller)
             {
-            	if(otherPlayer.IsInVehicle)
-            	{
-            		UnturnedChat.Say(caller, U.Translate("command_tphere_vehicle"));
-            		return;
-            	}
+                if (otherPlayer.IsInVehicle)
+                {
+                    UnturnedChat.Say(caller, U.Translate("command_tphere_vehicle"));
+                    return;
+                }
                 otherPlayer.Teleport(player);
                 Logger.Log(U.Translate("command_tphere_teleport_console", otherPlayer.CharacterName, player.CharacterName));
                 UnturnedChat.Say(caller, U.Translate("command_tphere_teleport_from_private", otherPlayer.CharacterName));

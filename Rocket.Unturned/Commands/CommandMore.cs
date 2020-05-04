@@ -2,10 +2,7 @@
 using Rocket.API.Extensions;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Rocket.Unturned.Commands
 {
@@ -28,17 +25,17 @@ namespace Rocket.Unturned.Commands
 
         public string Name
         {
-            get{ return "more"; }
+            get { return "more"; }
         }
 
         public List<string> Permissions
         {
-            get{ return new List<string>() { "rocket.more" }; }
+            get { return new List<string>() { "rocket.more" }; }
         }
 
         public string Syntax
         {
-            get{ return "<amount>"; }
+            get { return "<amount>"; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)

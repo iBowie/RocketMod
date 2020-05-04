@@ -70,7 +70,7 @@ namespace Rocket.Unturned.Commands
                 }
                 player.Teleport(player.Position, currentDirection);
             }
-            
+
             string directionName = "Unknown";
 
             if (currentDirection > 30 && currentDirection < 60)

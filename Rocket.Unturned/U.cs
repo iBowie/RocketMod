@@ -4,11 +4,9 @@ using Rocket.API.Extensions;
 using Rocket.Core;
 using Rocket.Core.Assets;
 using Rocket.Core.Extensions;
-using Rocket.Core.Logging;
 using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Commands;
-using Rocket.Unturned.Effects;
 using Rocket.Unturned.Events;
 using Rocket.Unturned.Permissions;
 using Rocket.Unturned.Player;
@@ -27,7 +25,7 @@ namespace Rocket.Unturned
 {
     public class U : MonoBehaviour, IRocketImplementation, IModuleNexus
     {
-        private static GameObject rocketGameObject; 
+        private static GameObject rocketGameObject;
         public static U Instance;
 
         private static readonly TranslationList defaultTranslations = new TranslationList(){
@@ -114,7 +112,7 @@ namespace Rocket.Unturned
                 { "invalid_character_name","invalid character name"},
                 { "command_not_found","Command not found."}
         };
-         
+
 
         public static XMLFileAsset<UnturnedSettings> Settings;
         public static XMLFileAsset<TranslationList> Translation;
@@ -141,7 +139,7 @@ namespace Rocket.Unturned
                 DontDestroyOnLoad(rocketGameObject);
 
 
-                if(System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
+                if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
                     Console = rocketGameObject.AddComponent<UnturnedConsole>();
 
                 System.Console.Clear();
@@ -160,7 +158,7 @@ namespace Rocket.Unturned
                 };
             }
         }
-        
+
         private void Awake()
         {
             Instance = this;
@@ -230,7 +228,7 @@ namespace Rocket.Unturned
                 Core.Logging.Logger.LogException(ex);
             }
         }
-        
+
         private void bindDelegates()
         {
             CommandWindow.onCommandWindowInputted += (string text, ref bool shouldExecuteCommand) =>
@@ -273,10 +271,10 @@ namespace Rocket.Unturned
 
             Provider.onCheckValid += (ValidateAuthTicketResponse_t callback, ref bool isValid) =>
             {
-                if(isValid)
+                if (isValid)
                     isValid = UnturnedPermissions.CheckValid(callback);
             };
-    }
+        }
 
         public void Reload()
         {
@@ -299,8 +297,8 @@ namespace Rocket.Unturned
             get
             {
                 return Dedicator.serverID;
-            } 
+            }
         }
     }
-               
+
 }

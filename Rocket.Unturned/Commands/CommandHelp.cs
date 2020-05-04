@@ -1,6 +1,5 @@
 ﻿using Rocket.API;
 using Rocket.Core;
-using Rocket.Core.Plugins;
 using SDG.Unturned;
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Shows you a specific help";}
+            get { return "Shows you a specific help"; }
         }
 
         public string Syntax
@@ -41,7 +40,7 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-                get { return new List<string>() { "rocket.help" }; }
+            get { return new List<string>() { "rocket.help" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
@@ -61,7 +60,7 @@ namespace Rocket.Unturned.Commands
                 R.Commands.Commands.Where(c => c.GetType().Assembly == Assembly.GetExecutingAssembly()).OrderBy(c => c.Name).All(c => { System.Console.WriteLine(c.Name.ToLower().PadRight(20, ' ') + " " + c.Syntax.ToLower()); return true; });
 
                 System.Console.WriteLine();
-                
+
                 foreach (IRocketPlugin plugin in R.Plugins.GetPlugins())
                 {
                     System.Console.ForegroundColor = ConsoleColor.Cyan;
@@ -77,7 +76,7 @@ namespace Rocket.Unturned.Commands
                 if (cmd != null)
                 {
                     string commandName = cmd.GetType().Assembly.GetName().Name + " / " + cmd.Name;
-                   
+
                     System.Console.ForegroundColor = ConsoleColor.Cyan;
                     System.Console.WriteLine("[" + commandName + "]");
                     System.Console.ForegroundColor = ConsoleColor.White;

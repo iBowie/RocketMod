@@ -1,9 +1,8 @@
 ﻿using Rocket.API;
+using Rocket.API.Extensions;
+using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using System.Collections.Generic;
-using System;
-using Rocket.Unturned.Chat;
-using Rocket.API.Extensions;
 
 namespace Rocket.Unturned.Commands
 {
@@ -24,7 +23,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Triggers an effect at your position";}
+            get { return "Triggers an effect at your position"; }
         }
 
         public string Syntax

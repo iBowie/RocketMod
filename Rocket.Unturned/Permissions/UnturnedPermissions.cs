@@ -1,5 +1,4 @@
 ﻿using Rocket.API;
-using Rocket.API.Serialisation;
 using Rocket.Core;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Extensions;
@@ -18,7 +17,7 @@ namespace Rocket.Unturned.Permissions
     {
         public delegate void JoinRequested(CSteamID player, ref ESteamRejection? rejectionReason);
         public static event JoinRequested OnJoinRequested;
-        
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         internal static bool CheckPermissions(SteamPlayer caller, string permission)
         {
@@ -66,16 +65,16 @@ namespace Rocket.Unturned.Permissions
                 string prefix = playerGroups.FirstOrDefault(x => !string.IsNullOrEmpty(x.Prefix))?.Prefix ?? "";
                 string suffix = playerGroups.FirstOrDefault(x => !string.IsNullOrEmpty(x.Suffix))?.Suffix ?? "";
 
-                if (prefix != "" || suffix != "") 
+                if (prefix != "" || suffix != "")
                 {
                     SteamPending steamPending = Provider.pending.FirstOrDefault(x => x.playerID.steamID == r.m_SteamID);
                     if (steamPending != null)
                     {
-                        if (prefix != "" && !steamPending.playerID.characterName.StartsWith(prefix)) 
+                        if (prefix != "" && !steamPending.playerID.characterName.StartsWith(prefix))
                         {
                             steamPending.playerID.characterName = $"{prefix}{steamPending.playerID.characterName}";
                         }
-                        if (suffix != "" && !steamPending.playerID.characterName.EndsWith(suffix)) 
+                        if (suffix != "" && !steamPending.playerID.characterName.EndsWith(suffix))
                         {
                             steamPending.playerID.characterName = $"{steamPending.playerID.characterName}{suffix}";
                         }

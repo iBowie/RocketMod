@@ -1,12 +1,11 @@
-﻿using Rocket.Core.Logging;
+﻿using Rocket.Core.Extensions;
 using Rocket.Unturned.Enumerations;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
 using System;
-using UnityEngine;
 using System.Linq;
-using Rocket.Core.Extensions;
+using UnityEngine;
 
 namespace Rocket.Unturned.Events
 {
@@ -26,7 +25,7 @@ namespace Rocket.Unturned.Events
             UnturnedEvents.triggerOnPlayerConnected(Player);
         }
 
-        internal static void TriggerReceive(SteamChannel instance, CSteamID d, byte[] a, int b,int size)
+        internal static void TriggerReceive(SteamChannel instance, CSteamID d, byte[] a, int b, int size)
         {
 #if DEBUG
             /*ESteamPacket eSteamPacket = (ESteamPacket)a[0];
@@ -46,7 +45,7 @@ namespace Rocket.Unturned.Events
 #endif
             return;
         }
-        
+
         internal static void TriggerSend(SteamPlayer s, string W, ESteamCall X, ESteamPacket l, params object[] R)
         {
             try
@@ -55,21 +54,22 @@ namespace Rocket.Unturned.Events
                 UnturnedPlayerEvents instance = s.player.transform.GetComponent<UnturnedPlayerEvents>();
                 UnturnedPlayer rp = UnturnedPlayer.FromSteamPlayer(s);
 #if DEBUG
-                 //string o = "";
-                 //foreach (object r in R)
-                 //{
-                 //    o += r.ToString();
-                 //}
-                 //Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + o);
+                //string o = "";
+                //foreach (object r in R)
+                //{
+                //    o += r.ToString();
+                //}
+                //Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + o);
 #endif
-                if (W.StartsWith("tellWear")) {
+                if (W.StartsWith("tellWear"))
+                {
                     OnPlayerWear.TryInvoke(rp, Enum.Parse(typeof(Wearables), W.Replace("tellWear", "")), (ushort)R[0], R.Count() > 1 ? (byte?)R[1] : null);
                 }
                 switch (W)
                 {
                     case "tellBleeding":
                         OnPlayerUpdateBleeding.TryInvoke(rp, (bool)R[0]);
-                        instance.OnUpdateBleeding.TryInvoke( rp, (bool)R[0]);
+                        instance.OnUpdateBleeding.TryInvoke(rp, (bool)R[0]);
                         break;
                     case "tellBroken":
                         OnPlayerUpdateBroken.TryInvoke(rp, (bool)R[0]);
@@ -97,11 +97,11 @@ namespace Rocket.Unturned.Events
                         break;
                     case "tellStance":
                         OnPlayerUpdateStance.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateStance.TryInvoke( rp, (byte)R[0]);
+                        instance.OnUpdateStance.TryInvoke(rp, (byte)R[0]);
                         break;
                     case "tellGesture":
                         OnPlayerUpdateGesture.TryInvoke(rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
-                        instance.OnUpdateGesture.TryInvoke( rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
+                        instance.OnUpdateGesture.TryInvoke(rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
                         break;
                     case "tellStat":
                         OnPlayerUpdateStat.TryInvoke(rp, (EPlayerStat)(byte)R[0]);
@@ -125,7 +125,7 @@ namespace Rocket.Unturned.Events
                         break;
                     default:
 #if DEBUG
-                       // Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + String.Join(",",R.Select(e => e.ToString()).ToArray()));
+                        // Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + String.Join(",",R.Select(e => e.ToString()).ToArray()));
 #endif
                         break;
                 }
@@ -133,7 +133,7 @@ namespace Rocket.Unturned.Events
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex,"Failed to receive packet \""+W+"\"");
+                Core.Logging.Logger.LogException(ex, "Failed to receive packet \"" + W + "\"");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Rocket.Unturned.Events
         public static event PlayerUpdatePosition OnPlayerUpdatePosition;
         internal static void fireOnPlayerUpdatePosition(UnturnedPlayer player)
         {
-            OnPlayerUpdatePosition.TryInvoke(player,player.Position);
+            OnPlayerUpdatePosition.TryInvoke(player, player.Position);
         }
 
         public delegate void PlayerUpdateBleeding(UnturnedPlayer player, bool bleeding);
@@ -181,7 +181,7 @@ namespace Rocket.Unturned.Events
         public static event PlayerUpdateWater OnPlayerUpdateWater;
         public event PlayerUpdateWater OnUpdateWater;
 
-        public enum PlayerGesture { None = 0, InventoryOpen = 1, InventoryClose = 2, Pickup = 3, PunchLeft = 4, PunchRight = 5, SurrenderStart = 6, SurrenderStop = 7, Point = 8, Wave = 9 , Salute = 10 , Arrest_Start = 11 , Arrest_Stop = 12 , Rest_Start = 13 , Rest_Stop = 14 , Facepalm = 15 };
+        public enum PlayerGesture { None = 0, InventoryOpen = 1, InventoryClose = 2, Pickup = 3, PunchLeft = 4, PunchRight = 5, SurrenderStart = 6, SurrenderStop = 7, Point = 8, Wave = 9, Salute = 10, Arrest_Start = 11, Arrest_Stop = 12, Rest_Start = 13, Rest_Stop = 14, Facepalm = 15 };
         public delegate void PlayerUpdateGesture(UnturnedPlayer player, PlayerGesture gesture);
         public static event PlayerUpdateGesture OnPlayerUpdateGesture;
         public event PlayerUpdateGesture OnUpdateGesture;
@@ -248,7 +248,7 @@ namespace Rocket.Unturned.Events
 
         private void onInventoryAdded(byte E, byte u, ItemJar J)
         {
-            OnPlayerInventoryAdded.TryInvoke(Player,(InventoryGroup)Enum.Parse(typeof(InventoryGroup), E.ToString()), u, J);
+            OnPlayerInventoryAdded.TryInvoke(Player, (InventoryGroup)Enum.Parse(typeof(InventoryGroup), E.ToString()), u, J);
             OnInventoryAdded.TryInvoke(Player, (InventoryGroup)Enum.Parse(typeof(InventoryGroup), E.ToString()), u, J);
         }
 
@@ -275,7 +275,7 @@ namespace Rocket.Unturned.Events
             return color;
         }
 
-        public enum Wearables { Hat = 0, Mask = 1, Vest = 2, Pants = 3, Shirt = 4, Glasses = 5, Backpack = 6};
+        public enum Wearables { Hat = 0, Mask = 1, Vest = 2, Pants = 3, Shirt = 4, Glasses = 5, Backpack = 6 };
         public delegate void PlayerWear(UnturnedPlayer player, Wearables wear, ushort id, byte? quality);
         public static event PlayerWear OnPlayerWear;
 

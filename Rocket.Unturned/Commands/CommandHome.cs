@@ -24,7 +24,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Teleports you to your last bed";}
+            get { return "Teleports you to your last bed"; }
         }
 
         public string Syntax

@@ -1,5 +1,4 @@
-﻿using Rocket.API.Extensions;
-using Rocket.Unturned.Events;
+﻿using Rocket.Unturned.Events;
 using SDG.Unturned;
 using System;
 using UnityEngine;
@@ -85,7 +84,7 @@ namespace Rocket.Unturned.Player
         private void Check()
         {
             initialCheck = true;
-           
+
             if (U.Settings.Instance.CharacterNameValidation)
             {
                 string username = Player.CharacterName;

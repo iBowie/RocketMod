@@ -1,11 +1,10 @@
-﻿using Rocket.Unturned.Player;
+﻿using Rocket.API;
+using Rocket.API.Extensions;
+using Rocket.Core.Extensions;
+using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
 using UnityEngine;
-using Rocket.Core.Extensions;
-using Rocket.API;
-using Rocket.API.Extensions;
-using Rocket.Core.Logging;
 
 namespace Rocket.Unturned.Events
 {
@@ -15,14 +14,16 @@ namespace Rocket.Unturned.Events
         private void Awake()
         {
             Instance = this;
-            Provider.onServerDisconnected += (CSteamID r) => {
+            Provider.onServerDisconnected += (CSteamID r) =>
+            {
                 if (r != CSteamID.Nil)
                 {
                     OnPlayerDisconnected.TryInvoke(UnturnedPlayer.FromCSteamID(r));
                 }
             };
             Provider.onServerShutdown += () => { onShutdown.TryInvoke(); };
-            Provider.onServerConnected += (CSteamID r) => {
+            Provider.onServerConnected += (CSteamID r) =>
+            {
                 if (r != CSteamID.Nil)
                 {
                     UnturnedPlayer p = (UnturnedPlayer)UnturnedPlayer.FromCSteamID(r);

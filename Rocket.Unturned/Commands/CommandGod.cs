@@ -1,9 +1,8 @@
 ﻿using Rocket.API;
 using Rocket.Core.Logging;
-using System.Collections.Generic;
-using System;
-using Rocket.Unturned.Player;
 using Rocket.Unturned.Chat;
+using Rocket.Unturned.Player;
+using System.Collections.Generic;
 
 namespace Rocket.Unturned.Commands
 {
@@ -24,7 +23,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Cause you ain't givin a shit";}
+            get { return "Cause you ain't givin a shit"; }
         }
 
         public string Syntax

@@ -1,5 +1,4 @@
-﻿using Rocket.Core.Logging;
-using SDG.Unturned;
+﻿using SDG.Unturned;
 using System;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ namespace Rocket.Unturned.Utils
             Instance = this;
             if (U.Settings.Instance.AutomaticSave.Enabled)
             {
-                if(U.Settings.Instance.AutomaticSave.Interval < interval)
+                if (U.Settings.Instance.AutomaticSave.Interval < interval)
                 {
                     Core.Logging.Logger.LogError("AutomaticSave interval must be atleast 30 seconds, changed to 30 seconds");
                 }
@@ -34,7 +33,7 @@ namespace Rocket.Unturned.Utils
             }
         }
 
-        private void restartTimer ()
+        private void restartTimer()
         {
             nextSaveTime = DateTime.Now.AddSeconds(interval);
         }

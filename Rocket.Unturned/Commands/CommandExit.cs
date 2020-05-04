@@ -2,7 +2,6 @@
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using System.Collections.Generic;
-using System;
 
 namespace Rocket.Unturned.Commands
 {
@@ -23,7 +22,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Exit the game without cooldown";}
+            get { return "Exit the game without cooldown"; }
         }
 
         public string Syntax

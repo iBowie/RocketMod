@@ -1,8 +1,7 @@
 ﻿using Rocket.API;
+using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using System.Collections.Generic;
-using System;
-using Rocket.Unturned.Chat;
 
 namespace Rocket.Unturned.Commands
 {
@@ -23,7 +22,7 @@ namespace Rocket.Unturned.Commands
 
         public string Help
         {
-            get { return "Heals yourself or somebody else";}
+            get { return "Heals yourself or somebody else"; }
         }
 
         public string Syntax
@@ -69,8 +68,8 @@ namespace Rocket.Unturned.Commands
                     otherPlayer.Hunger = 0;
                     otherPlayer.Thirst = 0;
                     UnturnedChat.Say(caller, U.Translate("command_heal_success_me", otherPlayer.CharacterName));
-                    
-                    if(caller != null)
+
+                    if (caller != null)
                         UnturnedChat.Say(otherPlayer, U.Translate("command_heal_success_other", caller.DisplayName));
                 }
                 else
