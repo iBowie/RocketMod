@@ -5,6 +5,8 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Rocket.Unturned.Chat
@@ -121,7 +123,7 @@ namespace Rocket.Unturned.Chat
         public static void Say(string message, Color color, bool rich)
         {
             Core.Logging.Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
-            foreach (string m in wrapMessage(message))
+            foreach (string m in rich ? richWrapMessage(message) : wrapMessage(message))
             {
                 ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: null, mode: EChatMode.GLOBAL, iconURL: null, useRichTextFormatting: rich);
             }
@@ -157,7 +159,7 @@ namespace Rocket.Unturned.Chat
             else
             {
                 SteamPlayer toPlayer = PlayerTool.getSteamPlayer(CSteamID);
-                foreach (string m in wrapMessage(message))
+                foreach (string m in rich ? richWrapMessage(message) : wrapMessage(message))
                 {
                     ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: toPlayer, mode: EChatMode.SAY, iconURL: null, useRichTextFormatting: rich);
                 }
@@ -196,6 +198,131 @@ namespace Rocket.Unturned.Chat
             if (currentLine.Length > 0)
                 lines.Add(currentLine);
             return lines;
+        }
+
+        public static List<string> richWrapMessage(string text)
+        {
+            IEnumerable<T> Reverse<T>(IList<T> ts)
+            {
+                for (int i = ts.Count - 1; i >= 0; i--)
+                {
+                    yield return ts[i];
+                }
+            }
+            void RemoveFromEnd(List<RichTag> richTags, RichTag element)
+            {
+                for (int i = richTags.Count - 1; i >= 0; i--)
+                {
+                    if (richTags[i] == element)
+                    {
+                        richTags.RemoveAt(i);
+                        return;
+                    }
+                }
+            }
+
+            List<string> result = new List<string>();
+
+            List<RichTag> tags = new List<RichTag>();
+
+            StringBuilder sb = new StringBuilder();
+
+            int clearLength = 0;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                char? prev = i > 0 ? text[i - 1] : (char?)null;
+                char? next = i < text.Length - 1 ? text[i + 1] : (char?)null;
+                char current = text[i];
+                string cut = text.Substring(i);
+
+                float lRatio = (sb.Length + tags.Select(d => d.Close).Sum(d => d.Length)) / 255f;
+
+                if (clearLength >= 90 || lRatio >= 0.75f)
+                {
+                    result.Add($"{sb}{string.Join("", Reverse(tags).Select(d => d.Close))}");
+                    sb.Clear();
+                    clearLength = 0;
+                    sb.Append(string.Join("", tags.Select(d => d.Open)));
+                }
+
+                switch (current)
+                {
+                    case '<' when prev != '\\':
+                        string tag = cut.Substring(0, cut.IndexOf('>'));
+                        i += tag.Length;
+                        if (next == '/')
+                        {
+                            RichTag t = RichTag.FromClose(tag);
+                            RemoveFromEnd(tags, t);
+                            sb.Append(t.Close);
+                        }
+                        else
+                        {
+                            RichTag t = RichTag.FromOpen(tag);
+                            tags.Add(t);
+                            sb.Append(t.Open);
+                        }
+                        break;
+                    default:
+                        sb.Append(current);
+                        clearLength++;
+                        break;
+                }
+            }
+
+            if (sb.Length > 0)
+            {
+                result.Add($"{sb}{string.Join("", Reverse(tags).Select(d => d.Close))}");
+            }
+
+            return result;
+        }
+
+        class RichTag
+        {
+            public RichTag(string open, string close)
+            {
+                this.Open = open;
+                this.Close = close;
+            }
+            public string Open { get; }
+            public string Close { get; }
+
+            public static RichTag Create(string open, string close)
+            {
+                return new RichTag(open, close);
+            }
+            public static RichTag FromOpen(string open)
+            {
+                return Create(getOpenTag(open), getCloseTag(open));
+            }
+            public static RichTag FromClose(string close)
+            {
+                return Create(getOpenTag(close), getCloseTag(close));
+            }
+
+            public static string getOpenTag(string tag)
+            {
+                return $"<{tag.Trim('<', '>').Replace("/", string.Empty)}>";
+            }
+            public static string getCloseTag(string tag)
+            {
+                string t = tag.Trim('<', '>');
+
+                string t1 = t.Split('=')[0];
+
+                return $"</{t1.Replace("/", string.Empty)}>";
+            }
+
+            public static bool operator ==(RichTag a, RichTag b)
+            {
+                return a.Close == b.Close;
+            }
+            public static bool operator !=(RichTag a, RichTag b)
+            {
+                return a.Close != b.Close;
+            }
         }
     }
 }
